@@ -136,7 +136,7 @@ const SEIRA_API = {
             ">
                 🔓 MODO ADMIN ATIVO
                 <div style="font-size: 11px; opacity: 0.9; margin-top: 4px;">
-                    Mostrando itens ocultos • Ctrl+Shift+H para desativar
+                    Mostrando itens ocultos • Ctrl+Shift+D para desativar
                 </div>
             </div>
             <style>
@@ -181,7 +181,7 @@ const SEIRA_API = {
 document.addEventListener('DOMContentLoaded', () => {
     document.addEventListener('keydown', (e) => {
         // Ctrl + Shift + H
-        if (e.ctrlKey && e.shiftKey && e.key === 'H') {
+        if (e.ctrlKey && e.shiftKey && e.key === 'D') {
             e.preventDefault();
             SEIRA_API.toggleAdminMode();
         }
@@ -192,5 +192,6 @@ document.addEventListener('DOMContentLoaded', () => {
         SEIRA_API.showAdminNotification();
     }
 });
+
 
 console.log('✅ API carregado');
