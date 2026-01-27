@@ -31,12 +31,12 @@ window.SEIRA_HIDDEN = {
     
     // Habilidades escondidas
     abilities: [
-        // Exemplo: 250, 300
+        310
     ],
     
     // Golpes escondidos
     moves: [
-        // Exemplo: 800, 850
+        920, 921
     ],
     
     // Quests escondidas
