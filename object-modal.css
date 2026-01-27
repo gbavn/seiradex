@@ -1,0 +1,365 @@
+/* ==================== OBJECT MODAL - SPECIFIC STYLES ==================== */
+
+/* ==================== OBJECT CARD ==================== */
+
+.object-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    padding: 20px;
+    cursor: pointer;
+}
+
+.object-icon {
+    width: 80px;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--dark2);
+    border-radius: var(--radius);
+    font-size: 48px;
+    color: var(--accent1);
+}
+
+.object-name {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--white);
+    text-align: center;
+}
+
+.object-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    justify-content: center;
+}
+
+/* ==================== MODAL HEADER ICON ==================== */
+
+.object-icon-title {
+    font-size: 32px;
+    margin-right: 10px;
+}
+
+.object-icon-display {
+    font-size: 32px;
+    color: var(--accent1);
+}
+
+/* ==================== ROLL TYPE INFO ==================== */
+
+.roll-type-info {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+
+/* ==================== SPAWN SECTIONS ==================== */
+
+/* ==================== SPAWN SECTIONS ==================== */
+
+.spawn-section {
+    margin-bottom: 25px;
+}
+
+.spawn-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 12px;
+}
+
+/* ==================== SPAWN CARDS ==================== */
+
+.spawn-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    padding: 12px;
+    background: var(--dark2);
+    border-radius: var(--radius);
+    cursor: pointer;
+    transition: var(--transition);
+    border: 2px solid transparent;
+}
+
+.spawn-card:hover {
+    background: var(--dark1);
+    border-color: var(--accent1);
+    transform: translateY(-2px);
+}
+
+.spawn-card-img {
+    width: 80px;
+    height: 80px;
+    object-fit: contain;
+}
+
+.spawn-card-icon {
+    font-size: 32px;
+    color: var(--accent1);
+}
+
+.spawn-card-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+}
+
+.spawn-card-number {
+    font-size: 11px;
+    color: var(--white2);
+}
+
+.spawn-card-name {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--white);
+    text-align: center;
+}
+
+
+/* ==================== RARITY GROUPS ==================== */
+
+.rarity-group {
+    margin-bottom: 20px;
+}
+
+.rarity-label {
+    display: inline-block;
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 700;
+    margin-bottom: 12px;
+    text-transform: uppercase;
+}
+
+.rarity-label.rarity-common {
+    background: #95a5a6;
+    color: white;
+}
+
+.rarity-label.rarity-rare {
+    background: #3498db;
+    color: white;
+}
+
+.rarity-label.rarity-epic {
+    background: #9b59b6;
+    color: white;
+}
+
+.rarity-label.rarity-special {
+    background: #e74c3c;
+    color: white;
+}
+
+/* ==================== CUSTOM PERCENTAGE LIST - AGORA É GRID ==================== */
+
+.spawn-percentage-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); /* ✅ Mudou para grid */
+    gap: 12px;
+}
+
+.spawn-item-percentage {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    padding: 12px;
+    background: var(--dark2);
+    border-radius: var(--radius);
+    cursor: pointer;
+    transition: var(--transition);
+    border: 2px solid transparent;
+}
+
+.spawn-item-percentage:hover {
+    background: var(--dark1);
+    border-color: var(--accent1);
+    transform: translateY(-2px);
+}
+
+.spawn-item-img {
+    width: 50px;
+    height: 50px;
+    object-fit: contain;
+}
+
+.spawn-pokemon-img {
+    width: 60px; 
+    height: 60px;
+    object-fit: contain;
+}
+
+.spawn-item-name {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--white);
+    text-align: center;
+}
+
+.spawn-percentage {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--accent1);
+    text-align: center;
+}
+
+/* ==================== MAPS GRID ==================== */
+
+.maps-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 12px;
+}
+
+.map-card {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px;
+    background: var(--dark2);
+    border-radius: var(--radius);
+    transition: var(--transition);
+}
+
+.map-card:hover {
+    background: var(--dark1);
+    transform: translateY(-2px);
+}
+
+.map-image {
+    width: 60px;
+    height: 60px;
+    border-radius: 6px;
+    overflow: hidden;
+    flex-shrink: 0;
+}
+
+.map-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.map-icon {
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+    color: var(--accent1);
+    background: var(--dark);
+    border-radius: 6px;
+    flex-shrink: 0;
+}
+
+.map-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.map-name {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--white);
+    margin: 0;
+}
+
+.map-type {
+    font-size: 12px;
+    color: var(--white2);
+}
+
+.map-link {
+    color: var(--accent1);
+    font-size: 18px;
+    transition: var(--transition);
+}
+
+.map-link:hover {
+    color: var(--accent2);
+    transform: scale(1.1);
+}
+
+/* ==================== BADGE COLORS ==================== */
+
+.badge-primary {
+    background: #3498db;
+    color: white;
+}
+
+.badge-info {
+    background: #17a2b8;
+    color: white;
+}
+
+.badge-success {
+    background: #28a745;
+    color: white;
+}
+
+.badge-secondary {
+    background: #6c757d;
+    color: white;
+}
+
+.badge-berry {
+    background: #e91e63;
+    color: white;
+}
+
+.badge-apricorn {
+    background: #ff9800;
+    color: white;
+}
+
+.badge-item {
+    background: #9c27b0;
+    color: white;
+}
+
+.badge-pokemon {
+    background: #f44336;
+    color: white;
+}
+
+.badge-both {
+    background: linear-gradient(90deg, #9c27b0, #f44336);
+    color: white;
+}
+
+/* ==================== RESPONSIVE ==================== */
+
+@media (max-width: 768px) {
+    .spawn-grid {
+        grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    }
+    
+    .maps-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 480px) {
+    .spawn-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .object-icon {
+        width: 60px;
+        height: 60px;
+        font-size: 36px;
+    }
+}

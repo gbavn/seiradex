@@ -1,0 +1,108 @@
+/* ==================== LAYOUT DO FÓRUM - SIMPLES ==================== */
+
+/* BODY - Fundo */
+body {
+    margin: 0;
+    padding: 0;
+    background: #0a0e27;
+    background-image: 
+        linear-gradient(rgba(10, 14, 39, 0.95), rgba(10, 14, 39, 0.95)),
+        url('https://images.unsplash.com/photo-1614732414444-096e5f1122d5?w=1920');
+    background-size: cover;
+    background-attachment: fixed;
+    background-position: center;
+}
+
+/* BANNER - Fora do wrapper */
+.forum-banner {
+    width: 100%;
+    max-width: 1100px;
+    margin: 30px auto;
+    padding: 0 20px;
+}
+
+.forum-banner img {
+    width: 100%;
+    height: 400px;
+    object-fit: cover;
+    border-radius: 12px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
+    display: block;
+}
+
+/* PAGE WRAPPER - Controla largura do conteúdo */
+.page-wrapper {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 20px 40px 20px;
+    background: green;
+}
+
+/* FOOTER - Fora do wrapper */
+.forum-footer {
+    background: linear-gradient(135deg, #0f1326 0%, #0a0e1a 100%);
+    border-top: 3px solid #1a1f3a;
+    padding: 40px 20px;
+    margin-top: 60px;
+    text-align: center;
+    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.footer-text {
+    color: #8fa3bf;
+    font-size: 14px;
+    margin-bottom: 15px;
+}
+
+.footer-links {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.footer-links a {
+    color: #8fa3bf;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 600;
+    transition: color 0.3s ease;
+}
+
+.footer-links a:hover {
+    color: #4a9eff;
+}
+
+/* ==================== RESPONSIVO ==================== */
+@media (max-width: 1100px) {
+    .page-wrapper {
+        max-width: 95%;
+    }
+    
+    .forum-banner {
+        max-width: 95%;
+    }
+}
+
+@media (max-width: 768px) {
+    .forum-banner {
+        margin: 20px auto;
+        padding: 0 10px;
+    }
+    
+    .forum-banner img {
+        height: 250px;
+        border-radius: 8px;
+    }
+    
+    .page-wrapper {
+        padding: 0 10px 20px 10px;
+    }
+}
+
+@media (max-width: 480px) {
+    .forum-banner img {
+        height: 180px;
+        border-radius: 0;
+    }
+}

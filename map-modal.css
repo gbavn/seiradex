@@ -1,0 +1,1029 @@
+/* ==================== MAP MODAL - ESTILOS DO MODAL ==================== */
+/* Este arquivo contém apenas estilos para o MODAL de detalhes do mapa */
+/* Para estilos do mapa interativo, veja: map-interactive.css */
+
+/* ==================== MAP CARD (Grid View) ==================== */
+
+.map-card {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    cursor: pointer;
+    padding: 0;
+}
+
+.map-card-image {
+    width: 100%;
+    height: 180px;
+    overflow: hidden;
+    background: var(--dark2);
+}
+
+.map-card-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.map-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: var(--white2);
+    font-size: 48px;
+}
+
+.map-card-content {
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.map-card-name {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--white);
+    margin: 0;
+}
+
+.map-card-badges {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+}
+
+.badge-city {
+    background: #3498db;
+    color: white;
+}
+
+.badge-route {
+    background: #27ae60;
+    color: white;
+}
+
+.badge-landmark {
+    background: #9b59b6;
+    color: white;
+}
+
+.badge-biome {
+    background: var(--dark2);
+    color: var(--white);
+}
+
+.map-spawn-preview {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+}
+
+.map-spawn-label {
+    color: var(--white2);
+}
+
+.map-spawn-icons {
+    display: flex;
+    gap: 4px;
+    color: var(--accent1);
+}
+
+.map-spawn-more {
+    font-size: 11px;
+    color: var(--white2);
+}
+
+/* ==================== MAP INFO LAYOUT (Dentro do Modal) ==================== */
+
+.map-info-layout {
+    display: grid;
+    grid-template-columns: 400px 1fr;
+    gap: 20px;
+}
+
+.map-main-image {
+    width: 100%;
+    height: 100%;
+    border-radius: var(--radius);
+    overflow: hidden;
+    background: var(--dark2);
+}
+
+.map-main-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.map-image-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    color: var(--white2);
+}
+
+.map-image-placeholder i {
+    font-size: 64px;
+}
+
+.map-image-placeholder span {
+    font-size: 14px;
+}
+
+.map-info-details {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.info-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.info-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    background: var(--dark2);
+    border-radius: var(--radius);
+}
+
+.info-label {
+    font-weight: 700;
+    color: var(--accent1);
+}
+
+.info-value {
+    color: var(--white);
+}
+
+.forum-link {
+    color: var(--accent1);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: var(--transition);
+}
+
+.forum-link:hover {
+    color: var(--accent2);
+}
+
+/* INFO Grids */
+
+.info-grid-3cols {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+}
+
+.metadata-row-2cols {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+}
+
+.info-item-full {
+    /* Para itens que ocupam toda a largura */
+}
+
+/* ==================== ACCESSES GRID ==================== */
+
+.accesses-grid-4cols {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+}
+
+.access-card {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 15px;
+    background: var(--dark2);
+    border-radius: var(--radius);
+    border: 2px solid transparent;
+    transition: var(--transition);
+}
+
+.access-card:hover {
+    border-color: var(--accent1);
+}
+
+.access-card.access-empty {
+    opacity: 0.5;
+    border-color: transparent;
+}
+
+.access-card.access-empty:hover {
+    border-color: transparent;
+    background: var(--dark2);
+}
+
+.access-direction {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--accent1);
+}
+
+.access-direction i {
+    font-size: 20px;
+}
+
+.access-info {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.access-name {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--white);
+}
+
+.access-name-empty {
+    font-size: 13px;
+    color: var(--white2);
+    font-style: italic;
+}
+
+.access-posts {
+    font-size: 12px;
+    color: var(--white2);
+}
+
+.access-link {
+    color: var(--accent1);
+    font-size: 16px;
+    transition: var(--transition);
+    text-decoration: none;
+}
+
+.access-link:hover {
+    color: var(--accent2);
+}
+
+/* ==================== POI GRID ==================== */
+
+.poi-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 12px;
+}
+
+.poi-card {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 15px;
+    background: var(--dark2);
+    border-radius: var(--radius);
+    cursor: pointer;
+    transition: var(--transition);
+    border: 2px solid transparent;
+}
+
+.poi-card:hover {
+    background: var(--dark1);
+    border-color: var(--accent1);
+}
+
+.poi-icon {
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--accent1);
+    border-radius: var(--radius);
+    font-size: 24px;
+    color: white;
+    flex-shrink: 0;
+}
+
+.poi-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.poi-name {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--white);
+    margin: 0;
+}
+
+.poi-type {
+    font-size: 12px;
+    color: var(--white2);
+}
+
+.poi-arrow {
+    color: var(--white2);
+    font-size: 16px;
+}
+
+/* ==================== QUEST MINI GRID ==================== */
+
+.quest-mini-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 12px;
+}
+
+.quest-mini-card {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px;
+    background: var(--dark2);
+    border-radius: var(--radius);
+    cursor: pointer;
+    transition: var(--transition);
+    border: 2px solid transparent;
+}
+
+.quest-mini-card:hover {
+    background: var(--dark1);
+    border-color: var(--accent1);
+}
+
+.quest-mini-icon {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--accent1);
+    border-radius: var(--radius);
+    font-size: 20px;
+    color: white;
+    flex-shrink: 0;
+}
+
+.quest-mini-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.quest-mini-name {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--white);
+}
+
+.quest-mini-requester {
+    font-size: 12px;
+    color: var(--white2);
+}
+
+/* ==================== OBJECT MINI GRID ==================== */
+
+.object-mini-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 12px;
+}
+
+.object-mini-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    padding: 12px;
+    background: var(--dark2);
+    border-radius: var(--radius);
+    cursor: pointer;
+    transition: var(--transition);
+    border: 2px solid transparent;
+}
+
+.object-mini-card:hover {
+    background: var(--dark1);
+    border-color: var(--accent1);
+}
+
+.object-mini-icon {
+    font-size: 32px;
+    color: var(--accent1);
+}
+
+.object-mini-name {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--white);
+    text-align: center;
+}
+
+/* ==================== FORAGEABLE ITEMS ==================== */
+
+.forageable-info {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 15px;
+    background: var(--dark2);
+    border-radius: var(--radius);
+    margin-bottom: 20px;
+    border-left: 3px solid #28a745;
+}
+
+.forageable-info i {
+    color: #28a745;
+    font-size: 20px;
+    flex-shrink: 0;
+    margin-top: 2px;
+}
+
+.forageable-info p {
+    margin: 0;
+    font-size: 14px;
+    color: var(--white1);
+    line-height: 1.6;
+}
+
+.forageable-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 12px;
+}
+
+.forageable-item-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    padding: 12px;
+    background: var(--dark2);
+    border-radius: var(--radius);
+    cursor: pointer;
+    transition: var(--transition);
+    border: 2px solid transparent;
+}
+
+.forageable-item-card:hover {
+    background: var(--dark1);
+    border-color: var(--accent1);
+}
+
+.forageable-item-img {
+    width: 50px;
+    height: 50px;
+    object-fit: contain;
+}
+
+.forageable-item-name {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--white);
+    text-align: center;
+}
+
+.forageable-item-rarity {
+    font-size: 11px;
+    padding: 3px 8px;
+    border-radius: 4px;
+}
+
+/* ==================== SPAWN GRID ==================== */
+
+.spawn-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 12px;
+}
+
+.spawn-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    padding: 12px;
+    background: var(--dark2);
+    border-radius: var(--radius);
+    cursor: pointer;
+    transition: var(--transition);
+    border: 2px solid transparent;
+}
+
+.spawn-card:hover {
+    background: var(--dark1);
+    border-color: var(--accent1);
+}
+
+.spawn-card-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+}
+
+.spawn-card-number {
+    font-size: 11px;
+    color: var(--white2);
+}
+
+.spawn-card-name {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--white);
+}
+
+.spawn-rarity-badge {
+    font-size: 10px;
+    padding: 3px 8px;
+    border-radius: 4px;
+}
+
+.rarity-common {
+    background: #95a5a6;
+    color: white;
+}
+
+.rarity-rare {
+    background: #3498db;
+    color: white;
+}
+
+.rarity-epic {
+    background: #9b59b6;
+    color: white;
+}
+
+/* FORAGEABLE */
+/* ==================== FORAGEABLE ITEMS ==================== */
+
+.forageable-info {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 15px;
+    background: var(--dark2);
+    border-radius: var(--radius);
+    margin-bottom: 20px;
+    border-left: 3px solid #28a745;
+}
+
+.forageable-info i {
+    color: #28a745;
+    font-size: 20px;
+    flex-shrink: 0;
+    margin-top: 2px;
+}
+
+.forageable-info p {
+    margin: 0;
+    font-size: 14px;
+    color: var(--white1);
+    line-height: 1.6;
+}
+
+.forageable-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 12px;
+}
+
+/* ✅ Card do item coletável */
+.forageable-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    padding: 16px;
+    background: var(--dark2);
+    border-radius: var(--radius);
+    cursor: pointer;
+    transition: var(--transition);
+    border: 2px solid transparent;
+}
+
+.forageable-card:hover {
+    background: var(--dark1);
+    border-color: #28a745;
+    transform: translateY(-2px);
+}
+
+/* ✅ Imagem do item */
+.forageable-img {
+    width: 50px;
+    height: 50px;
+    object-fit: contain;
+}
+
+/* ✅ Box de informações */
+.forageable-info-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    width: 100%;
+}
+
+/* ✅ Nome do item */
+.forageable-name {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--white);
+    text-align: center;
+}
+
+/* ✅ Cooldown */
+.forageable-cooldown {
+    font-size: 12px;
+    color: var(--white2);
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.forageable-cooldown i {
+    color: #17a2b8;
+    font-size: 12px;
+}
+
+.forageable-quantity {
+    font-size: 12px;
+    color: var(--white2);
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.forageable-quantity i {
+    color: #28a745;
+    font-size: 12px;
+}
+
+/* BADGES */
+.spawn-card-types {
+    display: flex;
+    gap: 4px;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 4px;
+}
+
+.spawn-card-types .type-badge {
+    font-size: 10px;
+    padding: 2px 6px;
+    border-radius: 3px;
+}
+
+/* ==================== POI MODAL (dentro do modal de mapa) ==================== */
+
+.poi-info-layout {
+    display: grid;
+    grid-template-columns: 300px 1fr;
+    gap: 20px;
+}
+
+.poi-main-image {
+    width: 100%;
+    height: 100%;
+    border-radius: var(--radius);
+    overflow: hidden;
+    background: var(--dark2);
+}
+
+.poi-main-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.poi-image-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    color: var(--white2);
+}
+
+.poi-image-placeholder i {
+    font-size: 48px;
+}
+
+.poi-image-placeholder span {
+    font-size: 13px;
+}
+
+.poi-info-details {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.poi-info-grid-2cols {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+}
+
+.info-item-description {
+    grid-column: 1 / -1;
+}
+
+.poi-description-content {
+    max-height: 150px;
+    overflow-y: auto;
+    padding: 10px;
+    background: var(--dark3);
+    border-radius: var(--radius);
+    color: var(--white1);
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+/* Shop Data (dentro de POIs) */
+
+.shop-section {
+    margin-bottom: 20px;
+}
+
+.shop-items-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 12px;
+}
+
+.shop-item-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    padding: 12px;
+    background: var(--dark2);
+    border-radius: var(--radius);
+    cursor: pointer;
+    transition: var(--transition);
+    border: 2px solid transparent;
+}
+
+.shop-item-card:hover {
+    background: var(--dark1);
+    border-color: var(--accent1);
+    transform: translateY(-2px);
+}
+
+.shop-item-img {
+    width: 50px;
+    height: 50px;
+    object-fit: contain;
+}
+
+.shop-item-name {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--white);
+    text-align: center;
+}
+
+.shop-item-price {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--white2);
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.shop-item-badge {
+    font-size: 10px;
+    padding: 3px 8px;
+}
+
+.badge-sell {
+    background: #28a745;
+    color: white;
+}
+
+.badge-buy {
+    background: #17a2b8;
+    color: white;
+}
+
+/* Linked Content (dentro de POIs) */
+
+.linked-section {
+    margin-bottom: 20px;
+}
+
+.linked-pokemon-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 12px;
+}
+
+.linked-pokemon-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    padding: 12px;
+    background: var(--dark2);
+    border-radius: var(--radius);
+    cursor: pointer;
+    transition: var(--transition);
+    border: 2px solid transparent;
+}
+
+.linked-pokemon-card:hover {
+    background: var(--dark1);
+    border-color: var(--accent1);
+}
+
+.linked-pokemon-img {
+    width: 70px;
+    height: 70px;
+    object-fit: contain;
+}
+
+.linked-pokemon-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+}
+
+.linked-pokemon-number {
+    font-size: 11px;
+    color: var(--white2);
+}
+
+.linked-pokemon-name {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--white);
+}
+
+.linked-items-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 12px;
+}
+
+.linked-item-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    padding: 12px;
+    background: var(--dark2);
+    border-radius: var(--radius);
+    cursor: pointer;
+    transition: var(--transition);
+    border: 2px solid transparent;
+}
+
+.linked-item-card:hover {
+    background: var(--dark1);
+    border-color: var(--accent1);
+}
+
+.linked-item-img {
+    width: 50px;
+    height: 50px;
+    object-fit: contain;
+}
+
+.linked-item-name {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--white);
+    text-align: center;
+}
+
+/* Custom Effect */
+
+.custom-effect-box {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 15px;
+    background: var(--dark2);
+    border-radius: var(--radius);
+    border-left: 3px solid #ffc107;
+}
+
+.custom-effect-box i {
+    color: #ffc107;
+    font-size: 20px;
+    flex-shrink: 0;
+    margin-top: 2px;
+}
+
+.custom-effect-box p {
+    margin: 0;
+    font-size: 14px;
+    color: var(--white1);
+    line-height: 1.6;
+}
+
+/* ==================== BADGE TYPES (POI Modal) ==================== */
+
+.badge-gym {
+    background: #e74c3c;
+    color: white;
+}
+
+.badge-shop {
+    background: #3498db;
+    color: white;
+}
+
+.badge-restaurant {
+    background: #e67e22;
+    color: white;
+}
+
+.badge-facility {
+    background: #9b59b6;
+    color: white;
+}
+
+.badge-service {
+    background: #1abc9c;
+    color: white;
+}
+
+/* ==================== RESPONSIVE - MAP MODAL ==================== */
+
+@media (max-width: 1024px) {
+    .map-info-layout,
+    .poi-info-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .accesses-grid-4cols {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .map-main-image,
+    .poi-main-image {
+        height: 200px;
+    }
+
+    .accesses-grid-4cols {
+        grid-template-columns: 1fr;
+    }
+
+    .poi-grid,
+    .quest-mini-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .info-grid-3cols {
+        grid-template-columns: 1fr;
+    }
+
+    .metadata-row-2cols {
+        grid-template-columns: 1fr;
+    }
+
+    .poi-info-grid-2cols {
+        grid-template-columns: 1fr;
+    }
+
+    .poi-description-content {
+        max-height: 120px;
+    }
+}
+
+@media (max-width: 480px) {
+    .map-card-image {
+        height: 140px;
+    }
+
+    .forageable-grid,
+    .shop-items-grid,
+    .linked-pokemon-grid,
+    .object-mini-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}

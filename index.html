@@ -1,0 +1,1141 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seira RPG Database</title>
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <!-- Game Icons (GMI) -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/game-icons-net@1.2.0/lib/game-icons.min.css">
+
+    <!-- ==================== CSS REFATORADO ==================== -->
+    <!-- CSS BASE (obrigatório - classes compartilhadas) -->
+    <link rel="stylesheet" href="./styles.css">
+
+    <!-- CSS ESPECÍFICOS (modais) -->
+    <link rel="stylesheet" href="./ability-modal.css">
+    <link rel="stylesheet" href="./item-modal.css">
+    <link rel="stylesheet" href="./pokemon-modal.css">
+    <link rel="stylesheet" href="./object-modal.css">
+    <link rel="stylesheet" href="./quest-modal.css">
+    <link rel="stylesheet" href="./map-modal.css">
+    <link rel="stylesheet" href="./forum-layout.css">
+    <link rel="stylesheet" href="./move-modal.css">
+    <link rel="stylesheet" href="./map-interactive.css">
+</head>
+
+<body>
+    <!-- Banner -->
+    <div class="forum-banner">
+        <img src="https://via.placeholder.com/1400x400/2a5298/ffffff?text=Database" alt="Banner">
+    </div>
+
+    <!-- Page Wrapper -->
+    <div class="page-wrapper">
+        <!-- Container Principal -->
+        <div class="database-container">
+
+            <!-- Header -->
+            <header class="database-header">
+                <h1>
+                    SeiraDex
+                </h1>
+            </header>
+
+            <!-- Navegação -->
+            <!-- Navegação -->
+            <nav class="nav-tabs">
+                <div class="nav-tab active" data-tab="pokedex">
+                    <i class="fas fa-dragon"></i>
+                    <span>Pokédex</span>
+                </div>
+                <div class="nav-tab" data-tab="itemdex">
+                    <i class="fas fa-backpack"></i>
+                    <span>Itemdex</span>
+                </div>
+                <div class="nav-tab" data-tab="movedex">
+                    <i class="fas fa-fist-raised"></i>
+                    <span>Movedex</span>
+                </div>
+                <div class="nav-tab" data-tab="abilitydex">
+                    <i class="fas fa-star"></i>
+                    <span>Abilitydex</span>
+                </div>
+                <div class="nav-tab" data-tab="objectdex">
+                    <i class="fas fa-cube"></i>
+                    <span>Objetos</span>
+                </div>
+                <div class="nav-tab" data-tab="questdex">
+                    <i class="fas fa-scroll"></i>
+                    <span>Quests</span>
+                </div>
+                <div class="nav-tab" data-tab="mapdex">
+                    <i class="fas fa-map"></i>
+                    <span>Mapa</span>
+                </div>
+                <div class="nav-tab" data-tab="shops">
+                    <i class="fas fa-store"></i>
+                    <span>Lojas</span>
+                </div>
+            </nav>
+
+            <!-- Conteúdo -->
+            <main class="database-content">
+
+                <!-- ==================== ABILITYDEX ==================== -->
+                <section id="abilitydex" class="content-section" x-data="seiraAbilitiesComponent()">
+
+                    <!-- Loading -->
+                    <div x-show="loading" class="loading">
+                        <i class="fas fa-spinner fa-spin"></i>
+                        <p>Carregando habilidades...</p>
+                    </div>
+
+                    <!-- Conteúdo Principal -->
+                    <div x-show="!loading">
+
+                        <!-- Barra de Ferramentas -->
+                        <div class="toolbar">
+                            <!-- Busca -->
+                            <div class="search-box">
+                                <i class="fas fa-search"></i>
+                                <input type="text" placeholder="Buscar habilidade..." x-model="filters.search"
+                                    @input="currentPage = 1">
+                            </div>
+
+                            <!-- Filtro: Modificado -->
+                            <button class="filter-toggle" :class="{ 'active': filters.modified }"
+                                @click="toggleModified()">
+                                <i class="fas fa-edit"></i> Modificado
+                            </button>
+
+                            <!-- Limpar Filtros -->
+                            <button class="btn-clear" @click="clearFilters()"
+                                x-show="filters.search || filters.modified">
+                                <i class="fas fa-times"></i> Limpar
+                            </button>
+                        </div>
+
+                        <!-- Info de Resultados -->
+                        <div class="results-info">
+                            <span
+                                x-text="`Mostrando ${startIndex + 1}-${endIndex} de ${filteredAbilities.length} habilidades`"></span>
+                        </div>
+
+                        <!-- Grid de Abilities -->
+                        <div class="data-grid">
+                            <template x-for="ability in paginatedAbilities" :key="ability.id">
+                                <div x-html="createAbilityCard(ability)"></div>
+                            </template>
+                        </div>
+
+                        <!-- Paginação -->
+                        <div class="pagination">
+                            <button @click="previousPage()" :disabled="currentPage === 1">
+                                <i class="fas fa-chevron-left"></i> Anterior
+                            </button>
+
+                            <template x-if="currentPage > 3">
+                                <button @click="goToPage(1)">1</button>
+                            </template>
+                            <template x-if="currentPage > 4">
+                                <span>...</span>
+                            </template>
+
+                            <template x-for="page in visiblePages" :key="page">
+                                <button @click="goToPage(page)" :class="{ 'active': page === currentPage }"
+                                    x-text="page"></button>
+                            </template>
+
+                            <template x-if="currentPage < totalPages - 3">
+                                <span>...</span>
+                            </template>
+                            <template x-if="currentPage < totalPages - 2">
+                                <button @click="goToPage(totalPages)" x-text="totalPages"></button>
+                            </template>
+
+                            <button @click="nextPage()" :disabled="currentPage === totalPages">
+                                Próxima <i class="fas fa-chevron-right"></i>
+                            </button>
+                        </div>
+
+                    </div>
+                </section>
+
+                <!-- ==================== ITEMDEX ==================== -->
+                <section id="itemdex" class="content-section" x-data="seiraItemsComponent()">
+
+                    <!-- Loading -->
+                    <div x-show="loading" class="loading">
+                        <i class="fas fa-spinner fa-spin"></i>
+                        <p>Carregando itens...</p>
+                    </div>
+
+                    <!-- Conteúdo Principal -->
+                    <div x-show="!loading">
+
+                        <!-- Barra de Ferramentas -->
+                        <div class="toolbar">
+                            <!-- Busca -->
+                            <div class="search-box">
+                                <i class="fas fa-search"></i>
+                                <input type="text" placeholder="Buscar item..." x-model="filters.search"
+                                    @input="currentPage = 1">
+                            </div>
+
+                            <!-- Select: Categoria -->
+                            <select x-model="filters.category" @change="updateSubcategories(); currentPage = 1">
+                                <option value="">Todas Categorias</option>
+                                <template x-for="cat in categories" :key="cat">
+                                    <option :value="cat" x-text="cat"></option>
+                                </template>
+                            </select>
+
+                            <!-- Select: Subcategoria -->
+                            <select x-model="filters.subcategory" @change="currentPage = 1"
+                                :disabled="!filters.category">
+                                <option value="">Todas Subcategorias</option>
+                                <template x-for="sub in subcategories" :key="sub">
+                                    <option :value="sub" x-text="sub"></option>
+                                </template>
+                            </select>
+
+                            <!-- Select: Raridade -->
+                            <select x-model="filters.rarity" @change="currentPage = 1">
+                                <option value="">Todas Raridades</option>
+                                <template x-for="rar in rarities" :key="rar">
+                                    <option :value="rar" x-text="rar"></option>
+                                </template>
+                            </select>
+
+                            <!-- Toggles -->
+                            <button class="filter-toggle" :class="{ 'active': filters.craftable }"
+                                @click="toggleCraftable()">
+                                <i class="fas fa-hammer"></i> Craftáveis
+                            </button>
+
+                            <button class="filter-toggle" :class="{ 'active': filters.forageable }"
+                                @click="toggleForageable()">
+                                <i class="fas fa-leaf"></i> Coletáveis
+                            </button>
+
+                            <button class="filter-toggle" :class="{ 'active': filters.book }" @click="toggleBook()">
+                                <i class="fas fa-book"></i> Livros
+                            </button>
+
+                            <!-- Limpar Filtros -->
+                            <button class="btn-clear" @click="clearFilters()" x-show="hasActiveFilters">
+                                <i class="fas fa-times"></i> Limpar
+                            </button>
+                        </div>
+
+                        <!-- Info de Resultados -->
+                        <div class="results-info">
+                            <span
+                                x-text="`Mostrando ${startIndex + 1}-${endIndex} de ${filteredItems.length} itens`"></span>
+                        </div>
+
+                        <!-- Grid de Items -->
+                        <div class="data-grid">
+                            <template x-for="item in paginatedItems" :key="item.id">
+                                <div x-html="createItemCard(item)"></div>
+                            </template>
+                        </div>
+
+                        <!-- Paginação -->
+                        <div class="pagination">
+                            <button @click="previousPage()" :disabled="currentPage === 1">
+                                <i class="fas fa-chevron-left"></i> Anterior
+                            </button>
+
+                            <template x-if="currentPage > 3">
+                                <button @click="goToPage(1)">1</button>
+                            </template>
+                            <template x-if="currentPage > 4">
+                                <span>...</span>
+                            </template>
+
+                            <template x-for="page in visiblePages" :key="page">
+                                <button @click="goToPage(page)" :class="{ 'active': page === currentPage }"
+                                    x-text="page"></button>
+                            </template>
+
+                            <template x-if="currentPage < totalPages - 3">
+                                <span>...</span>
+                            </template>
+                            <template x-if="currentPage < totalPages - 2">
+                                <button @click="goToPage(totalPages)" x-text="totalPages"></button>
+                            </template>
+
+                            <button @click="nextPage()" :disabled="currentPage === totalPages">
+                                Próxima <i class="fas fa-chevron-right"></i>
+                            </button>
+                        </div>
+
+                    </div>
+                </section>
+
+                <!-- ==================== POKÉDEX ==================== -->
+                <section id="pokedex" class="content-section active" x-data="seiraPokemonComponent()">
+
+                    <!-- Loading -->
+                    <div x-show="loading" class="loading">
+                        <i class="fas fa-spinner fa-spin"></i>
+                        <p>Carregando Pokémon...</p>
+                    </div>
+
+                    <!-- Conteúdo Principal -->
+                    <div x-show="!loading">
+
+                        <!-- Barra de Ferramentas -->
+                        <div class="toolbar">
+                            <!-- Busca -->
+                            <div class="search-box">
+                                <i class="fas fa-search"></i>
+                                <input type="text" placeholder="Buscar Pokémon (Nome ou #Número)..."
+                                    x-model="filters.search" @input="currentPage = 1">
+                            </div>
+
+                            <!-- Select: Tipo -->
+                            <select x-model="filters.type" @change="currentPage = 1">
+                                <option value="">Todos os Tipos</option>
+                                <template x-for="type in typeOptions" :key="type">
+                                    <option :value="type" x-text="type"></option>
+                                </template>
+                            </select>
+
+                            <!-- Select: Raridade -->
+                            <select x-model="filters.rarity" @change="currentPage = 1">
+                                <option value="">Todas Raridades</option>
+                                <template x-for="rar in rarityOptions" :key="rar">
+                                    <option :value="rar" x-text="rar.charAt(0).toUpperCase() + rar.slice(1)"></option>
+                                </template>
+                            </select>
+
+                            <!-- Select: Forma -->
+                            <select x-model="filters.form" @change="currentPage = 1">
+                                <option value="base">Apenas Base</option>
+                                <option value="all">Todas</option>
+                            </select>
+
+                            <!-- Select: Região -->
+                            <select x-model="filters.region" @change="currentPage = 1">
+                                <option value="">Todas Regiões</option>
+                                <template x-for="region in regionOptions" :key="region">
+                                    <option :value="region" x-text="region"></option>
+                                </template>
+                            </select>
+
+                            <!-- Toggles -->
+                            <button class="filter-toggle" :class="{ 'active': filters.isStarter }"
+                                @click="toggleStarter()">
+                                <i class="fas fa-star"></i> Iniciais
+                            </button>
+
+                            <button class="filter-toggle" :class="{ 'active': filters.inSeiraDex }"
+                                @click="toggleSeiraDex()">
+                                <i class="fas fa-book"></i> Seira Pokédex
+                            </button>
+
+                            <button class="filter-toggle" :class="{ 'active': filters.isProducer }"
+                                @click="toggleProducer()">
+                                <i class="fas fa-egg"></i> Produtores
+                            </button>
+
+                            <!-- Limpar Filtros -->
+                            <button class="btn-clear" @click="clearFilters()" x-show="hasActiveFilters">
+                                <i class="fas fa-times"></i> Limpar
+                            </button>
+                        </div>
+
+                        <!-- Info de Resultados -->
+                        <div class="results-info">
+                            <span
+                                x-text="`Mostrando ${startIndex + 1}-${endIndex} de ${filteredPokemon.length} Pokémon`"></span>
+                        </div>
+
+                        <!-- Grid de Pokemon -->
+                        <div class="data-grid">
+                            <template x-for="pokemon in paginatedPokemon" :key="pokemon.id">
+                                <div x-html="createPokemonCard(pokemon)"></div>
+                            </template>
+                        </div>
+
+                        <!-- Paginação -->
+                        <div class="pagination">
+                            <button @click="previousPage()" :disabled="currentPage === 1">
+                                <i class="fas fa-chevron-left"></i> Anterior
+                            </button>
+
+                            <template x-if="currentPage > 3">
+                                <button @click="goToPage(1)">1</button>
+                            </template>
+                            <template x-if="currentPage > 4">
+                                <span>...</span>
+                            </template>
+
+                            <template x-for="page in visiblePages" :key="page">
+                                <button @click="goToPage(page)" :class="{ 'active': page === currentPage }"
+                                    x-text="page"></button>
+                            </template>
+
+                            <template x-if="currentPage < totalPages - 3">
+                                <span>...</span>
+                            </template>
+                            <template x-if="currentPage < totalPages - 2">
+                                <button @click="goToPage(totalPages)" x-text="totalPages"></button>
+                            </template>
+
+                            <button @click="nextPage()" :disabled="currentPage === totalPages">
+                                Próxima <i class="fas fa-chevron-right"></i>
+                            </button>
+                        </div>
+
+                    </div>
+                </section>
+
+                <!-- ==================== OBJECTDEX ==================== -->
+                <section id="objectdex" class="content-section" x-data="seiraObjectComponent()">
+
+                    <!-- Loading -->
+                    <div x-show="loading" class="loading">
+                        <i class="fas fa-spinner fa-spin"></i>
+                        <p>Carregando objetos...</p>
+                    </div>
+
+                    <!-- Conteúdo Principal -->
+                    <div x-show="!loading">
+
+                        <!-- Barra de Ferramentas -->
+                        <div class="toolbar">
+                            <!-- Busca -->
+                            <div class="search-box">
+                                <i class="fas fa-search"></i>
+                                <input type="text" placeholder="Buscar objeto..." x-model="filters.search"
+                                    @input="currentPage = 1">
+                            </div>
+
+                            <!-- Select: Categoria -->
+                            <select x-model="filters.category" @change="currentPage = 1">
+                                <option value="">Todas Categorias</option>
+                                <template x-for="cat in categoryOptions" :key="cat.value">
+                                    <option :value="cat.value" x-text="cat.label"></option>
+                                </template>
+                            </select>
+
+                            <!-- Select: Gives -->
+                            <select x-model="filters.gives" @change="currentPage = 1">
+                                <option value="">Todos os Tipos</option>
+                                <template x-for="give in givesOptions" :key="give.value">
+                                    <option :value="give.value" x-text="give.label"></option>
+                                </template>
+                            </select>
+
+                            <!-- Toggles -->
+                            <button class="filter-toggle" :class="{ 'active': filters.isRollable === true }"
+                                @click="toggleRollable(true)">
+                                <i class="fas fa-dice"></i> Sorteáveis
+                            </button>
+
+                            <button class="filter-toggle" :class="{ 'active': filters.isRollable === false }"
+                                @click="toggleRollable(false)">
+                                <i class="fas fa-ban"></i> Não Sorteáveis
+                            </button>
+
+                            <!-- Limpar Filtros -->
+                            <button class="btn-clear" @click="clearFilters()" x-show="hasActiveFilters">
+                                <i class="fas fa-times"></i> Limpar
+                            </button>
+                        </div>
+
+                        <!-- Info de Resultados -->
+                        <div class="results-info">
+                            <span
+                                x-text="`Mostrando ${startIndex + 1}-${endIndex} de ${filteredObjects.length} objetos`"></span>
+                        </div>
+
+                        <!-- Grid de Objects -->
+                        <div class="data-grid">
+                            <template x-for="object in paginatedObjects" :key="object.id">
+                                <div x-html="createObjectCard(object)"></div>
+                            </template>
+                        </div>
+
+                        <!-- Paginação -->
+                        <div class="pagination">
+                            <button @click="previousPage()" :disabled="currentPage === 1">
+                                <i class="fas fa-chevron-left"></i> Anterior
+                            </button>
+
+                            <template x-if="currentPage > 3">
+                                <button @click="goToPage(1)">1</button>
+                            </template>
+                            <template x-if="currentPage > 4">
+                                <span>...</span>
+                            </template>
+
+                            <template x-for="page in visiblePages" :key="page">
+                                <button @click="goToPage(page)" :class="{ 'active': page === currentPage }"
+                                    x-text="page"></button>
+                            </template>
+
+                            <template x-if="currentPage < totalPages - 3">
+                                <span>...</span>
+                            </template>
+                            <template x-if="currentPage < totalPages - 2">
+                                <button @click="goToPage(totalPages)" x-text="totalPages"></button>
+                            </template>
+
+                            <button @click="nextPage()" :disabled="currentPage === totalPages">
+                                Próxima <i class="fas fa-chevron-right"></i>
+                            </button>
+                        </div>
+
+                    </div>
+                </section>
+
+                <!-- ==================== QUESTDEX ==================== -->
+                <section id="questdex" class="content-section" x-data="seiraQuestComponent()">
+
+                    <!-- Loading -->
+                    <div x-show="loading" class="loading">
+                        <i class="fas fa-spinner fa-spin"></i>
+                        <p>Carregando quests...</p>
+                    </div>
+
+                    <!-- Conteúdo Principal -->
+                    <div x-show="!loading">
+
+                        <!-- Barra de Ferramentas -->
+                        <div class="toolbar">
+                            <!-- Busca -->
+                            <div class="search-box">
+                                <i class="fas fa-search"></i>
+                                <input type="text" placeholder="Buscar quest..." x-model="filters.search"
+                                    @input="currentPage = 1">
+                            </div>
+
+                            <!-- Select: Status -->
+                            <select x-model="filters.status" @change="currentPage = 1">
+                                <option value="">Todos os Status</option>
+                                <template x-for="st in statusOptions" :key="st.value">
+                                    <option :value="st.value" x-text="st.label"></option>
+                                </template>
+                            </select>
+
+                            <!-- Toggles -->
+                            <button class="filter-toggle" :class="{ 'active': filters.repeatable === true }"
+                                @click="toggleRepeatable(true)">
+                                <i class="fas fa-redo"></i> Repetíveis
+                            </button>
+
+                            <button class="filter-toggle" :class="{ 'active': filters.repeatable === false }"
+                                @click="toggleRepeatable(false)">
+                                <i class="fas fa-ban"></i> Não Repetíveis
+                            </button>
+
+                            <button class="filter-toggle" :class="{ 'active': filters.hasRewards }"
+                                @click="toggleHasRewards()">
+                                <i class="fas fa-gift"></i> Com Recompensas
+                            </button>
+
+                            <!-- Limpar Filtros -->
+                            <button class="btn-clear" @click="clearFilters()" x-show="hasActiveFilters">
+                                <i class="fas fa-times"></i> Limpar
+                            </button>
+                        </div>
+
+                        <!-- Info de Resultados -->
+                        <div class="results-info">
+                            <span
+                                x-text="`Mostrando ${startIndex + 1}-${endIndex} de ${filteredQuests.length} quests`"></span>
+                        </div>
+
+                        <!-- Grid de Quests -->
+                        <div class="data-grid">
+                            <template x-for="quest in paginatedQuests" :key="quest.id">
+                                <div x-html="createQuestCard(quest)"></div>
+                            </template>
+                        </div>
+
+                        <!-- Paginação -->
+                        <div class="pagination">
+                            <button @click="previousPage()" :disabled="currentPage === 1">
+                                <i class="fas fa-chevron-left"></i> Anterior
+                            </button>
+
+                            <template x-if="currentPage > 3">
+                                <button @click="goToPage(1)">1</button>
+                            </template>
+                            <template x-if="currentPage > 4">
+                                <span>...</span>
+                            </template>
+
+                            <template x-for="page in visiblePages" :key="page">
+                                <button @click="goToPage(page)" :class="{ 'active': page === currentPage }"
+                                    x-text="page"></button>
+                            </template>
+
+                            <template x-if="currentPage < totalPages - 3">
+                                <span>...</span>
+                            </template>
+                            <template x-if="currentPage < totalPages - 2">
+                                <button @click="goToPage(totalPages)" x-text="totalPages"></button>
+                            </template>
+
+                            <button @click="nextPage()" :disabled="currentPage === totalPages">
+                                Próxima <i class="fas fa-chevron-right"></i>
+                            </button>
+                        </div>
+
+                    </div>
+                </section>
+
+                <!-- ==================== MAPDEX ==================== -->
+                <section id="mapdex" class="content-section" x-data="seiraMapComponent()">
+
+                    <!-- Loading -->
+                    <div x-show="loading" class="loading">
+                        <i class="fas fa-spinner fa-spin"></i>
+                        <p>Carregando mapas...</p>
+                    </div>
+
+                    <!-- Conteúdo Principal -->
+                    <div x-show="!loading">
+
+                        <!-- Tabs de Visualização -->
+                        <div class="view-tabs" style="margin-bottom: 20px;">
+                            <button class="view-tab active"
+                                @click="activeView = 'interactive'; $event.target.parentElement.querySelectorAll('.view-tab').forEach(t => t.classList.remove('active')); $event.target.classList.add('active');">
+                                <i class="fas fa-map-marked-alt"></i> Mapa Interativo
+                            </button>
+                            <button class="view-tab"
+                                @click="activeView = 'cards'; $event.target.parentElement.querySelectorAll('.view-tab').forEach(t => t.classList.remove('active')); $event.target.classList.add('active');">
+                                <i class="fas fa-th"></i> Visualizar Cards
+                            </button>
+                        </div>
+
+                        <!-- VIEW 1: Mapa Interativo -->
+                        <div x-show="activeView === 'interactive'" x-init="activeView = 'interactive'">
+                            <div class="interactive-map-container">
+                                <!-- Imagem de fundo do mapa -->
+                                <img src="https://i.imgur.com/3A05Tct.png" class="interactive-map-background"
+                                    alt="Mapa de Seira" />
+
+                                <!-- Container de markers (preenchido dinamicamente pelo JS) -->
+                                <div id="map-markers"></div>
+
+                                <!-- Legenda ATUALIZADA com ícones SVG -->
+                                <div class="map-legend">
+                                    <div class="map-legend-title">LEGENDA</div>
+
+                                    <!-- Cidade -->
+                                    <div class="map-legend-item">
+                                        <div class="map-legend-icon city">
+                                            <img src="https://raw.githubusercontent.com/gbavn/Seira-Icons/refs/heads/main/City.svg"
+                                                alt="Cidade">
+                                        </div>
+                                        <span>Cidade</span>
+                                    </div>
+
+                                    <!-- Rota -->
+                                    <div class="map-legend-item">
+                                        <div class="map-legend-icon route">01</div>
+                                        <span>Rota</span>
+                                    </div>
+
+                                    <!-- Landmark -->
+                                    <div class="map-legend-item">
+                                        <div class="map-legend-icon landmark">
+                                            <img src="https://raw.githubusercontent.com/gbavn/Seira-Icons/refs/heads/main/Landmark.svg"
+                                                alt="Landmark">
+                                        </div>
+                                        <span>Landmark</span>
+                                    </div>
+
+                                    <!-- Locked (NOVO) -->
+                                    <div class="map-legend-item">
+                                        <div class="map-legend-icon locked">🔒</div>
+                                        <span>Bloqueado</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- VIEW 2: Cards -->
+                        <div x-show="activeView === 'cards'">
+                            <!-- Barra de Ferramentas -->
+                            <div class="toolbar">
+                                <!-- Busca -->
+                                <div class="search-box">
+                                    <i class="fas fa-search"></i>
+                                    <input type="text" placeholder="Buscar mapa..." x-model="filters.search"
+                                        @input="currentPage = 1">
+                                </div>
+
+                                <!-- Select: Tipo -->
+                                <select x-model="filters.type" @change="currentPage = 1">
+                                    <option value="">Todos os Tipos</option>
+                                    <template x-for="type in typeOptions" :key="type.value">
+                                        <option :value="type.value" x-text="type.label"></option>
+                                    </template>
+                                </select>
+
+                                <!-- Select: Bioma -->
+                                <select x-model="filters.biome" @change="currentPage = 1">
+                                    <option value="">Todos os Biomas</option>
+                                    <template x-for="biome in biomeOptions" :key="biome.value">
+                                        <option :value="biome.value" x-text="biome.label"></option>
+                                    </template>
+                                </select>
+
+                                <!-- Toggles -->
+                                <button class="filter-toggle" :class="{ 'active': filters.hasSpawns }"
+                                    @click="toggleHasSpawns()">
+                                    <i class="fas fa-paw"></i> Com Spawns
+                                </button>
+
+                                <!-- Limpar Filtros -->
+                                <button class="btn-clear" @click="clearFilters()" x-show="hasActiveFilters">
+                                    <i class="fas fa-times"></i> Limpar
+                                </button>
+                            </div>
+
+                            <!-- Info de Resultados -->
+                            <div class="results-info">
+                                <span
+                                    x-text="`Mostrando ${startIndex + 1}-${endIndex} de ${filteredMaps.length} mapas`"></span>
+                            </div>
+
+                            <!-- Grid de Maps -->
+                            <div class="data-grid">
+                                <template x-for="map in paginatedMaps" :key="map.id">
+                                    <div x-html="createMapCard(map)"></div>
+                                </template>
+                            </div>
+
+                            <!-- Paginação -->
+                            <div class="pagination">
+                                <button @click="previousPage()" :disabled="currentPage === 1">
+                                    <i class="fas fa-chevron-left"></i> Anterior
+                                </button>
+
+                                <template x-if="currentPage > 3">
+                                    <button @click="goToPage(1)">1</button>
+                                </template>
+                                <template x-if="currentPage > 4">
+                                    <span>...</span>
+                                </template>
+
+                                <template x-for="page in visiblePages" :key="page">
+                                    <button @click="goToPage(page)" :class="{ 'active': page === currentPage }"
+                                        x-text="page"></button>
+                                </template>
+
+                                <template x-if="currentPage < totalPages - 3">
+                                    <span>...</span>
+                                </template>
+                                <template x-if="currentPage < totalPages - 2">
+                                    <button @click="goToPage(totalPages)" x-text="totalPages"></button>
+                                </template>
+
+                                <button @click="nextPage()" :disabled="currentPage === totalPages">
+                                    Próxima <i class="fas fa-chevron-right"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                    </div>
+                </section>
+
+                <!-- ==================== MOVEDEX ==================== -->
+                <section id="movedex" class="content-section" x-data="seiraMoveComponent()">
+
+                    <!-- Loading -->
+                    <div x-show="loading" class="loading">
+                        <i class="fas fa-spinner fa-spin"></i>
+                        <p>Carregando moves...</p>
+                    </div>
+
+                    <!-- Conteúdo Principal -->
+                    <div x-show="!loading">
+
+                        <!-- Barra de Ferramentas -->
+                        <div class="toolbar">
+                            <!-- Busca -->
+                            <div class="search-box">
+                                <i class="fas fa-search"></i>
+                                <input type="text" placeholder="Buscar move..." x-model="filters.search"
+                                    @input="currentPage = 1">
+                            </div>
+
+                            <!-- Select: Tipo -->
+                            <select x-model="filters.type" @change="currentPage = 1">
+                                <option value="">Todos os Tipos</option>
+                                <template x-for="type in typeOptions" :key="type">
+                                    <option :value="type" x-text="type"></option>
+                                </template>
+                            </select>
+
+                            <!-- Select: Categoria -->
+                            <select x-model="filters.category" @change="currentPage = 1">
+                                <option value="">Todas Categorias</option>
+                                <template x-for="cat in categoryOptions" :key="cat.value">
+                                    <option :value="cat.value" x-text="cat.label"></option>
+                                </template>
+                            </select>
+
+                            <!-- Select: Classe -->
+                            <select x-model="filters.moveClass" @change="currentPage = 1">
+                                <option value="">Todas as Classes</option>
+                                <template x-for="cls in moveClassOptions" :key="cls.value">
+                                    <option :value="cls.value" x-text="cls.label"></option>
+                                </template>
+                            </select>
+
+                            <!-- Toggle: Modificado -->
+                            <button class="filter-toggle" :class="{ 'active': filters.modified }"
+                                @click="toggleModified()">
+                                <i class="fas fa-edit"></i> Modificado
+                            </button>
+
+                            <!-- Limpar Filtros -->
+                            <button class="btn-clear" @click="clearFilters()" x-show="hasActiveFilters">
+                                <i class="fas fa-times"></i> Limpar
+                            </button>
+                        </div>
+
+                        <!-- Info de Resultados -->
+                        <div class="results-info">
+                            <span
+                                x-text="`Mostrando ${startIndex + 1}-${endIndex} de ${filteredMoves.length} moves`"></span>
+                        </div>
+
+                        <!-- Grid de Moves -->
+                        <div class="data-grid">
+                            <template x-for="move in paginatedMoves" :key="move.id">
+                                <div x-html="createMoveCard(move)"></div>
+                            </template>
+                        </div>
+
+                        <!-- Paginação -->
+                        <div class="pagination">
+                            <button @click="previousPage()" :disabled="currentPage === 1">
+                                <i class="fas fa-chevron-left"></i> Anterior
+                            </button>
+
+                            <template x-if="currentPage > 3">
+                                <button @click="goToPage(1)">1</button>
+                            </template>
+                            <template x-if="currentPage > 4">
+                                <span>...</span>
+                            </template>
+
+                            <template x-for="page in visiblePages" :key="page">
+                                <button @click="goToPage(page)" :class="{ 'active': page === currentPage }"
+                                    x-text="page"></button>
+                            </template>
+
+                            <template x-if="currentPage < totalPages - 3">
+                                <span>...</span>
+                            </template>
+                            <template x-if="currentPage < totalPages - 2">
+                                <button @click="goToPage(totalPages)" x-text="totalPages"></button>
+                            </template>
+
+                            <button @click="nextPage()" :disabled="currentPage === totalPages">
+                                Próxima <i class="fas fa-chevron-right"></i>
+                            </button>
+                        </div>
+
+                    </div>
+                </section>
+
+                <!-- ==================== SHOPS ==================== -->
+                <section id="shops" class="content-section">
+
+                    <!-- Menu de Lojas -->
+                    <div class="shops-menu">
+                        <h2>Selecione uma Loja</h2>
+                        <div class="shops-grid">
+                            <div class="shop-menu-card" onclick="loadShop('pokemart')">
+                                <i class="fas fa-store"></i>
+                                <h3>Pokemart</h3>
+                                <p>Loja oficial da Liga Pokémon</p>
+                            </div>
+                            <div class="shop-menu-card" onclick="loadShop('casino')">
+                                <i class="fas fa-dice"></i>
+                                <h3>Casino</h3>
+                                <p>Troque suas fichas por prêmios</p>
+                            </div>
+                            <div class="shop-menu-card" onclick="loadShop('mile_shop')">
+                                <i class="fas fa-ticket"></i>
+                                <h3>Loja de Milhas</h3>
+                                <p>Itens exclusivos para membros</p>
+                            </div>
+                            <div class="shop-menu-card" onclick="loadShop('book_shop')">
+                                <i class="fas fa-book"></i>
+                                <h3>Livraria</h3>
+                                <p>Livros de receitas</p>
+                            </div>
+                            <div class="shop-menu-card" onclick="loadShop('tm_shop')">
+                                <i class="fas fa-compact-disc"></i>
+                                <h3>Loja de Discos</h3>
+                                <p>TMs para seus Pokémon</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Área da Loja (será carregada dinamicamente) -->
+                    <div id="shop-content" style="display: none;"></div>
+
+                </section>
+
+            </main>
+
+        </div>
+
+        <!-- MODAL -->
+        <div id="modal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 id="modal-title"></h2>
+                    <div class="modal-header-buttons">
+                        <button class="modal-header-btn modal-close">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="modal-body" id="modal-body"></div>
+            </div>
+        </div>
+
+        <!-- Alpine.js -->
+        <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
+        <!-- Scripts - ORDEM IMPORTANTE! -->
+
+        <!-- 0. Hide Config (PRIMEIRO) -->
+        <script src="./utils/hide-config.js"></script>
+
+        <!-- 1. Core -->
+        <script src="./core/config.js"></script>
+        <script src="./core/state.js"></script>
+        <script src="./core/api.js"></script>
+
+        <!-- 2. Utils -->
+        <script src="./utils/formatters.js"></script>
+        <script src="./utils/filters.js"></script>
+        <script src="./utils/helpers.js"></script>
+
+        <!-- 3. UI -->
+        <script src="./ui/navigation.js"></script>
+        <script src="./ui/pagination.js"></script>
+        <script src="./ui/modal.js"></script>
+        <script src="./ui/spoiler.js"></script>
+
+        <!-- 4. Components - Abilities -->
+        <script src="./components/abilities/abilities-component.js"></script>
+        <script src="./components/abilities/ability-card.js"></script>
+        <script src="./components/abilities/ability-modal.js"></script>
+
+        <!-- 5. Components - Items -->
+        <script src="./components/items/item-usage.js"></script>
+        <script src="./components/items/items-component.js"></script>
+        <script src="./components/items/item-card.js"></script>
+        <script src="./components/items/item-modal.js"></script>
+
+        <!-- 6. Components - Pokemon -->
+        <script src="./components/pokemon/pokemon-evolution.js"></script>
+        <script src="./components/pokemon/pokemon-locations.js"></script>
+        <script src="./components/pokemon/pokemon-forms.js"></script>
+        <script src="./components/pokemon/pokemon-component.js"></script>
+        <script src="./components/pokemon/pokemon-card.js"></script>
+        <script src="./components/pokemon/pokemon-modal.js"></script>
+
+        <!-- 7. Components - Moves -->
+        <script src="./components/moves/move-card.js"></script>
+        <script src="./components/moves/move-component.js"></script>
+        <script src="./components/moves/move-modal.js"></script>
+
+        <!-- 7. Components - Objects -->
+        <script src="./components/objects/object-card.js"></script>
+        <script src="./components/objects/object-component.js"></script>
+        <script src="./components/objects/object-modal.js"></script>
+
+        <!-- 8. Components - Quests -->
+        <script src="./components/quests/quest-card.js"></script>
+        <script src="./components/quests/quest-component.js"></script>
+        <script src="./components/quests/quest-modal.js"></script>
+
+        <!-- 9. Components - Maps -->
+        <script src="./components/maps/map-card.js"></script>
+        <script src="./components/maps/map-component.js"></script>
+        <script src="./components/maps/map-modal.js"></script>
+        <script src="./components/maps/map-poi-modal.js"></script>
+        <script src="./components/maps/map-interactive.js"></script>
+
+        <!-- 10. Components - Shops -->
+        <script src="./components/shops/shop-config.js"></script>
+        <script src="./components/shops/shop-component.js"></script>
+        <script src="./components/shops/shop-card.js"></script>
+
+        <!-- 11. Shop Loader -->
+        <script>
+            function loadShop(shopId) {
+                const shopContent = document.getElementById('shop-content');
+                const shopsMenu = document.querySelector('.shops-menu');
+                const config = getShopConfig(shopId);
+
+                if (!config) return;
+
+                // Esconde menu, mostra conteúdo
+                shopsMenu.style.display = 'none';
+                shopContent.style.display = 'block';
+
+                // Monta HTML da loja
+                shopContent.innerHTML = `
+                <div x-data="seiraShopComponent('${shopId}')">
+                    <!-- Botão Voltar -->
+                    <button class="btn-back" onclick="backToShops()">
+                        <i class="fas fa-arrow-left"></i> Voltar às Lojas
+                    </button>
+                    
+                    <!-- Header da Loja -->
+                    <div class="shop-header">
+                        <i class="fas ${config.icon}"></i>
+                        <div>
+                            <h2>${config.name}</h2>
+                            <p>${config.description}</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Loading -->
+                    <div x-show="loading" class="loading">
+                        <i class="fas fa-spinner fa-spin"></i>
+                        <p>Carregando loja...</p>
+                    </div>
+                    
+                    <!-- Conteúdo -->
+                    <div x-show="!loading">
+                        <!-- Filtros -->
+                        <div class="toolbar">
+                            <div class="search-box">
+                                <i class="fas fa-search"></i>
+                                <input 
+                                    type="text" 
+                                    placeholder="Buscar item..."
+                                    x-model="filters.search"
+                                    @input="currentPage = 1"
+                                >
+                            </div>
+                            
+                            <select x-model="filters.category" @change="updateSubcategories(); currentPage = 1">
+                                <option value="">Todas Categorias</option>
+                                <template x-for="cat in categories" :key="cat">
+                                    <option :value="cat" x-text="cat"></option>
+                                </template>
+                            </select>
+                            
+                            <select x-model="filters.subcategory" @change="currentPage = 1" :disabled="!filters.category">
+                                <option value="">Todas Subcategorias</option>
+                                <template x-for="sub in subcategories" :key="sub">
+                                    <option :value="sub" x-text="sub"></option>
+                                </template>
+                            </select>
+                            
+                            <select x-model="filters.rarity" @change="currentPage = 1">
+                                <option value="">Todas Raridades</option>
+                                <template x-for="rar in rarities" :key="rar">
+                                    <option :value="rar" x-text="rar"></option>
+                                </template>
+                            </select>
+                            
+                            <button class="btn-clear" @click="clearFilters()" x-show="hasActiveFilters">
+                                <i class="fas fa-times"></i> Limpar
+                            </button>
+                        </div>
+                        
+                        <!-- Resultados -->
+                        <div class="results-info">
+                            <span x-text="\`Mostrando \${startIndex + 1}-\${endIndex} de \${filteredItems.length} itens\`"></span>
+                        </div>
+                        
+                        <!-- Grid -->
+                        <div class="data-grid">
+                            <template x-for="item in paginatedItems" :key="item.id">
+                                <div x-html="createShopCard(item, shopConfig)"></div>
+                            </template>
+                        </div>
+                        
+                        <!-- Paginação -->
+                        <div class="pagination">
+                            <button @click="previousPage()" :disabled="currentPage === 1">
+                                <i class="fas fa-chevron-left"></i> Anterior
+                            </button>
+                            
+                            <template x-if="currentPage > 3">
+                                <button @click="goToPage(1)">1</button>
+                            </template>
+                            <template x-if="currentPage > 4">
+                                <span>...</span>
+                            </template>
+                            
+                            <template x-for="page in visiblePages" :key="page">
+                                <button 
+                                    @click="goToPage(page)"
+                                    :class="{ 'active': page === currentPage }"
+                                    x-text="page"
+                                ></button>
+                            </template>
+                            
+                            <template x-if="currentPage < totalPages - 3">
+                                <span>...</span>
+                            </template>
+                            <template x-if="currentPage < totalPages - 2">
+                                <button @click="goToPage(totalPages)" x-text="totalPages"></button>
+                            </template>
+                            
+                            <button @click="nextPage()" :disabled="currentPage === totalPages">
+                                Próxima <i class="fas fa-chevron-right"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+                // Reinicializa Alpine no novo conteúdo
+                Alpine.initTree(shopContent);
+            }
+
+            function backToShops() {
+                document.querySelector('.shops-menu').style.display = 'block';
+                document.getElementById('shop-content').style.display = 'none';
+                document.getElementById('shop-content').innerHTML = '';
+            }
+        </script>
+
+        <!-- 12. Main (inicialização) -->
+        <script src="./main.js"></script>
+
+    </div> <!-- /.page-wrapper -->
+
+    <!-- Footer -->
+    <footer class="forum-footer">
+        <div class="footer-text">© 2025 Seira RPG</div>
+        <div class="footer-links">
+            <a href="#">Regras</a>
+            <a href="#">Suporte</a>
+        </div>
+    </footer>
+
+</body>
+
+</html>
