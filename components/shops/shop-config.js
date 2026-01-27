@@ -34,10 +34,10 @@ const SHOP_CONFIGS = {
         name: 'Loja de Milhas',
         description: 'Itens exclusivos para membros',
         icon: 'fa-ticket',
-        currency: '🎫',
+        currency: 'M',
         priceKey: 'mile', // item.price.mile
         categories: {
-            'Vouchers': [384, 588, 687, 774, 775, 776, 777, 778, 779, 780, 781]
+            'Vouchers': [384, 588, 792, 687, 800, 774, 775, 776, 777, 778, 779, 780, 781, 797, 798, 799]
         }
     },
     
