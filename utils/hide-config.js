@@ -41,7 +41,7 @@ window.SEIRA_HIDDEN = {
     
     // Quests escondidas
     quests: [
-  1
+        1, 12,13,14,15,22
 ],
     
     // ==================== LOCKED (Visíveis mas bloqueados) ====================
