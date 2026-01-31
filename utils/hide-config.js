@@ -50,7 +50,7 @@ window.SEIRA_HIDDEN = {
     // NÃO aparecem em buscas, cards ou "onde encontrar"
     locked: {
         maps: [
-            'R01', 'R02', 'R03', 'R08', 'R09', 'R10', 'R11', 'LUM', 'AZR', 'MTL', 'ARD', 'SLV', 'CRG', 'HBZ', 'VER', 'SAN', 'MTGL', 'PTVY', 'DSRT', 'SELV', 'VULC', 'ILHA', 'FLSB', 'BSQP'
+            'R02', 'R03', 'R08', 'R09', 'R10', 'R11', 'LUM', 'AZR', 'MTL', 'ARD', 'SLV', 'CRG', 'HBZ', 'SAN', 'MTGL', 'PTVY', 'DSRT', 'SELV', 'VULC', 'ILHA', 'FLSB', 'BSQP'
         ]
     },
     
