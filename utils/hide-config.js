@@ -12,7 +12,7 @@ window.SEIRA_HIDDEN = {
     
     // Objetos escondidos
     objects: [
-        // Exemplo: 'HIDDEN_BERRY_TREE'
+       'megg1'
     ],
     
     // Itens escondidos
