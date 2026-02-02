@@ -7,7 +7,7 @@ window.SEIRA_HIDDEN = {
     
     // Mapas escondidos (não aparecem em lugar nenhum)
     maps: [
-        // Exemplo: 'R07', 'SECRET_CAVE'
+       'map-1770050287479', 'LUM'
     ],
     
     // Objetos escondidos
@@ -50,7 +50,7 @@ window.SEIRA_HIDDEN = {
     // NÃO aparecem em buscas, cards ou "onde encontrar"
     locked: {
         maps: [
-            'R02', 'R03', 'R08', 'R09', 'R10', 'R11', 'LUM', 'AZR', 'MTL', 'ARD', 'SLV', 'CRG', 'HBZ', 'SAN', 'MTGL', 'PTVY', 'DSRT', 'SELV', 'VULC', 'ILHA', 'FLSB', 'BSQP'
+            'R02', 'R03', 'R08', 'R09', 'R10', 'R11', 'AZR', 'MTL', 'ARD', 'SLV', 'CRG', 'HBZ', 'SAN', 'MTGL', 'PTVY', 'DSRT', 'SELV', 'VULC', 'ILHA', 'FLSB', 'BSQP'
         ]
     },
     
