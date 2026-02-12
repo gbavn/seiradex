@@ -1,7 +1,7 @@
 // ==================== HIDE & LOCK CONFIG ====================
 
 window.SEIRA_HIDDEN = {
-    // Listas vazias (serão preenchidas pelo HTML)
+    // Listas vazias (serão preenchidas pelo config.json)
     maps: [],
     objects: [],
     items: [],
@@ -97,3 +97,21 @@ window.SEIRA_HIDDEN = {
         return filtered;
     }
 };
+
+// ==================== CARREGA CONFIG.JSON ====================
+fetch('https://raw.githubusercontent.com/gbavn/seira-database/main/database/config.json')
+    .then(res => res.json())
+    .then(config => {
+        window.SEIRA_HIDDEN.maps = config.hidden.maps || [];
+        window.SEIRA_HIDDEN.objects = config.hidden.objects || [];
+        window.SEIRA_HIDDEN.items = config.hidden.items || [];
+        window.SEIRA_HIDDEN.pokemon = config.hidden.pokemon || [];
+        window.SEIRA_HIDDEN.abilities = config.hidden.abilities || [];
+        window.SEIRA_HIDDEN.moves = config.hidden.moves || [];
+        window.SEIRA_HIDDEN.quests = config.hidden.quests || [];
+        window.SEIRA_HIDDEN.locked.maps = config.locked.maps || [];
+        console.log('✅ Hide & Lock Config carregado do config.json');
+    })
+    .catch(err => console.error('❌ Erro ao carregar config.json:', err));
+
+console.log('✅ Hide & Lock Config carregado');
