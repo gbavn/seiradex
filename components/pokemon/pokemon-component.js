@@ -16,7 +16,7 @@ function seiraPokemonComponent() {
             form: 'base',
             region: '',
             isStarter: false,
-            inSeiraDex: false,
+            seira: '',
             isProducer: false
         },
 
@@ -93,9 +93,10 @@ function seiraPokemonComponent() {
                 filtered = filtered.filter(p => p.is_starter === true);
             }
 
-            // Seira Pokédex
-            if (this.filters.inSeiraDex) {
-                filtered = filtered.filter(p => p.in_seira_pokedex === true);
+            // Pokédex (Regional/Nacional)
+            if (this.filters.seira !== '') {
+                const seiraValue = this.filters.seira === 'true';
+                filtered = filtered.filter(p => p.in_seira_pokedex === seiraValue);
             }
 
             // Produtores
@@ -141,7 +142,7 @@ function seiraPokemonComponent() {
         get hasActiveFilters() {
             return this.filters.search || this.filters.type || this.filters.rarity ||
                 this.filters.region || this.filters.isStarter ||
-                this.filters.inSeiraDex || this.filters.isProducer;
+                this.filters.seira || this.filters.isProducer;
         },
 
         // Methods
@@ -180,11 +181,6 @@ function seiraPokemonComponent() {
             this.currentPage = 1;
         },
 
-        toggleSeiraDex() {
-            this.filters.inSeiraDex = !this.filters.inSeiraDex;
-            this.currentPage = 1;
-        },
-
         toggleProducer() {
             this.filters.isProducer = !this.filters.isProducer;
             this.currentPage = 1;
@@ -198,7 +194,7 @@ function seiraPokemonComponent() {
                 form: 'base',
                 region: '',
                 isStarter: false,
-                inSeiraDex: false,
+                seira: '',
                 isProducer: false
             };
             this.currentPage = 1;
@@ -227,5 +223,3 @@ function seiraPokemonComponent() {
         }
     };
 }
-
-console.log('✅ Pokemon Component (Alpine) carregado');
